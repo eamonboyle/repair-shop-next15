@@ -2,6 +2,7 @@ import { BackButton } from "@/components/back-button";
 import { getTicket } from "@/lib/queries/getTicket";
 import { getCustomer } from "@/lib/queries/getCustomer";
 import * as sentry from "@sentry/nextjs";
+import TicketForm from "./ticket-form";
 
 export default async function TicketFormPage({
     searchParams,
@@ -65,15 +66,8 @@ export default async function TicketFormPage({
 
             const customer = await getCustomer(ticket.customerId);
 
-            console.log("ticket", ticket);
-            console.log("customer", customer);
-
             // return ticket form component
-            return (
-                <div>
-                    Ticket ID # {ticketId} - {customer.firstName}
-                </div>
-            );
+            return <TicketForm customer={customer} ticket={ticket} />;
         }
     } catch (error) {
         if (error instanceof Error) {
